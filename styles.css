@@ -118,7 +118,7 @@ body {
   color: #9ca3af;
 }
 
-/* KID SELECTOR ------------------------------------------------- */
+/* PROFILE SELECTOR --------------------------------------------- */
 
 .kid-selector {
   margin-bottom: 10px;
@@ -181,7 +181,7 @@ body {
   box-shadow: 0 10px 24px rgba(244, 114, 182, 0.7);
 }
 
-/* PROFILE SUMMARY --------------------------------------------- */
+/* PROFILE SUMMARY ---------------------------------------------- */
 
 .kid-summary {
   margin-top: 8px;
@@ -577,29 +577,6 @@ body {
   margin-top: 8px;
 }
 
-.learning-main-card {
-  border-radius: 16px;
-  background: #020617;
-  border: 1px solid rgba(148, 163, 184, 0.4);
-  padding: 18px 14px;
-  text-align: center;
-}
-
-.learning-emoji {
-  font-size: 2.6rem;
-  margin-bottom: 8px;
-}
-
-.learning-text {
-  font-size: 1rem;
-  margin-bottom: 6px;
-}
-
-.learning-subtext {
-  font-size: 0.8rem;
-  color: #9ca3af;
-}
-
 .learning-btn {
   flex: 1;
   border-radius: 999px;
@@ -615,32 +592,6 @@ body {
 .learning-btn.primary {
   background: #22c55e;
   color: #022c22;
-}
-
-.milo-game-grid {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-}
-
-.milo-card {
-  flex: 1;
-  min-width: 70px;
-  border-radius: 16px;
-  padding: 14px 6px;
-  background: #020617;
-  border: 1px solid rgba(148, 163, 184, 0.5);
-  text-align: center;
-  cursor: pointer;
-}
-
-.milo-card-emoji {
-  font-size: 2rem;
-  margin-bottom: 4px;
-}
-
-.milo-card-label {
-  font-size: 0.75rem;
 }
 
 /* STORYBOOK / CARTOON BOOK ------------------------------------ */
@@ -680,12 +631,6 @@ body {
 .book-emoji-main {
   font-size: 2.8rem;
   margin-bottom: 6px;
-}
-
-.book-title-line {
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 4px;
 }
 
 .book-text {
@@ -728,7 +673,7 @@ body {
   color: #9ca3af;
 }
 
-/* Make book stack nicely on small screens */
+/* stack pages on very small phones */
 @media (max-width: 420px) {
   .book-layout {
     grid-template-columns: 1fr;
@@ -739,6 +684,33 @@ body {
   }
 }
 
+/* MILO GAME ---------------------------------------------------- */
+
+.milo-game-grid {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.milo-card {
+  flex: 1;
+  min-width: 70px;
+  border-radius: 16px;
+  padding: 14px 6px;
+  background: #020617;
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  text-align: center;
+  cursor: pointer;
+}
+
+.milo-card-emoji {
+  font-size: 2rem;
+  margin-bottom: 4px;
+}
+
+.milo-card-label {
+  font-size: 0.75rem;
+}
 
 /* PARENT CONTROLS --------------------------------------------- */
 
