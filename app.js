@@ -176,7 +176,7 @@ const rewardShop = [
     icon: "👑",
     title: "Queen of the Week",
     description:
-      "Mum-only reward: alone time pass (coffee, pokies, scroll) and crowned Queen of the Week.",
+      "Mum-only reward: 2-hour alone time pass (coffee, pokies, scroll) and crowned Queen of the Week.",
     cost: 40,
     onlyFor: "mum",
   },
@@ -254,7 +254,6 @@ const babyStories = [
   },
 ];
 
-
 const flashCards = [
   { emoji: "🐕", label: "Milo the dog" },
   { emoji: "😈", label: "Toby the Chaos Kid" },
@@ -277,8 +276,7 @@ const STORAGE_KEY = "familyHubState_v2";
 
 let state = {
   activeKidId: "tali",
-  // profiles: kidId -> { coins, completedQuestIds, mood, unlockedRewardIds }
-  kids: {},
+  kids: {}, // kidId -> { coins, completedQuestIds, mood, unlockedRewardIds }
 };
 
 function initKidStateIfNeeded(kidId) {
@@ -345,7 +343,7 @@ const familyLevelValueEl = document.getElementById("familyLevelValue");
 const familyLevelFillEl = document.getElementById("familyLevelFill");
 const familySummaryTextEl = document.getElementById("familySummaryText");
 
-// Learning modal elements
+// Learning modal
 const learnButtons = Array.from(document.querySelectorAll(".learn-btn"));
 const learningModalEl = document.getElementById("learningModal");
 const learningTitleEl = document.getElementById("learningTitle");
@@ -353,6 +351,7 @@ const learningBodyEl = document.getElementById("learningBody");
 const learningFooterEl = document.getElementById("learningFooter");
 const learningCloseBtn = document.getElementById("learningClose");
 
+// Parent controls
 const toggleParentBtn = document.getElementById("toggleParentBtn");
 const parentPanel = document.getElementById("parentPanel");
 const resetKidQuestsBtn = document.getElementById("resetKidQuestsBtn");
@@ -394,8 +393,8 @@ function renderKidTabs() {
   kids.forEach((kid) => {
     const btn = document.createElement("button");
     btn.className = "kid-tab";
-    if (kid.id === "toby") btn.classList.add("toby"); // chaos style
-    if (kid.id === "mum") btn.classList.add("mum"); // queen style
+    if (kid.id === "toby") btn.classList.add("toby");
+    if (kid.id === "mum") btn.classList.add("mum");
     if (kid.id === state.activeKidId) {
       btn.classList.add("active");
     }
@@ -424,7 +423,6 @@ function renderKidTabs() {
 function renderKidSummary() {
   const kid = getActiveKid();
   const kidData = getKidState(kid.id);
-
   const level = getKidLevel(kidData.coins);
 
   kidEmojiEl.textContent = kid.emoji;
@@ -650,7 +648,7 @@ function closeLearningModal() {
   learningFooterEl.innerHTML = "";
 }
 
-// Storybook
+// Storybook with book layout and brown kids
 function renderStoryPage() {
   const story = babyStories[learningState.storyIndex];
   const page = story.pages[learningState.storyPageIndex];
@@ -660,7 +658,6 @@ function renderStoryPage() {
   learningBodyEl.innerHTML = "";
   learningFooterEl.innerHTML = "";
 
-  // --- BOOK LAYOUT WRAPPER ---
   const book = document.createElement("div");
   book.className = "book-layout";
 
@@ -668,7 +665,7 @@ function renderStoryPage() {
   spine.className = "book-spine-shadow";
   book.appendChild(spine);
 
-  // LEFT PAGE: main emoji + text
+  // Left page
   const leftPage = document.createElement("div");
   leftPage.className = "book-page";
 
@@ -695,7 +692,7 @@ function renderStoryPage() {
   leftPage.appendChild(sub);
   leftPage.appendChild(pageInfo);
 
-  // RIGHT PAGE: cast of kids (little brown cartoon crew)
+  // Right page: cast
   const rightPage = document.createElement("div");
   rightPage.className = "book-page";
 
@@ -708,61 +705,29 @@ function renderStoryPage() {
 
   const castRow = document.createElement("div");
   castRow.className = "book-cast-row";
-  // Tali, Tai, Moses, Toby, Ziah as little brown cartoon kids
   castRow.textContent = "👧🏾👦🏾👦🏽👦🏾👦🏽";
 
   const castNames = document.createElement("div");
   castNames.className = "book-cast-names";
   castNames.textContent = "Tali, Tai, Moses, Toby & Ziah";
 
-  cast.appendChild(castTitle);
-  cast.appendChild(castRow);
-  cast.appendChild(castNames);
-
   const miloNote = document.createElement("div");
   miloNote.className = "book-subtext";
   miloNote.textContent = "And of course, Milo the German Shepherd 🐕";
 
+  cast.appendChild(castTitle);
+  cast.appendChild(castRow);
+  cast.appendChild(castNames);
+
   rightPage.appendChild(cast);
   rightPage.appendChild(miloNote);
 
-  // Put pages into book
   book.appendChild(leftPage);
   book.appendChild(rightPage);
 
   learningBodyEl.appendChild(book);
 
-  // --- FOOTER BUTTONS ---
-  const backBtn = document.createElement("button");
-  backBtn.className = "learning-btn";
-  backBtn.textContent = "Back";
-  backBtn.disabled = learningState.storyPageIndex === 0;
-  backBtn.addEventListener("click", () => {
-    if (learningState.storyPageIndex > 0) {
-      learningState.storyPageIndex--;
-      renderStoryPage();
-    }
-  });
-
-  const nextBtn = document.createElement("button");
-  nextBtn.className = "learning-btn primary";
-  const isLast = learningState.storyPageIndex === story.pages.length - 1;
-  nextBtn.textContent = isLast ? "Finish" : "Next";
-  nextBtn.addEventListener("click", () => {
-    if (!isLast) {
-      learningState.storyPageIndex++;
-      renderStoryPage();
-    } else {
-      closeLearningModal();
-    }
-  });
-
-  learningFooterEl.appendChild(backBtn);
-  learningFooterEl.appendChild(nextBtn);
-}
-
-
-  // footer buttons
+  // Footer buttons
   const backBtn = document.createElement("button");
   backBtn.className = "learning-btn";
   backBtn.textContent = "Back";
@@ -793,8 +758,7 @@ function renderStoryPage() {
 
 // Flash cards
 function renderFlashCard() {
-  const cardData =
-    flashCards[learningState.cardIndex % flashCards.length];
+  const cardData = flashCards[learningState.cardIndex % flashCards.length];
 
   learningTitleEl.textContent = "Family Flash Cards";
 
@@ -802,18 +766,18 @@ function renderFlashCard() {
   learningFooterEl.innerHTML = "";
 
   const card = document.createElement("div");
-  card.className = "learning-main-card";
+  card.className = "book-page"; // reuse style
 
   const emoji = document.createElement("div");
-  emoji.className = "learning-emoji";
+  emoji.className = "book-emoji-main";
   emoji.textContent = cardData.emoji;
 
   const text = document.createElement("div");
-  text.className = "learning-text";
+  text.className = "book-text";
   text.textContent = cardData.label;
 
   const sub = document.createElement("div");
-  sub.className = "learning-subtext";
+  sub.className = "book-subtext";
   sub.textContent = "Tap next to see another card.";
 
   card.appendChild(emoji);
@@ -852,20 +816,19 @@ function renderMiloGame(message) {
   learningFooterEl.innerHTML = "";
 
   const wrapper = document.createElement("div");
-  wrapper.className = "learning-main-card";
+  wrapper.className = "book-page";
 
   const info = document.createElement("div");
-  info.className = "learning-text";
+  info.className = "book-text";
   info.textContent = "Tap on the card where Milo is hiding.";
 
   const sub = document.createElement("div");
-  sub.className = "learning-subtext";
+  sub.className = "book-subtext";
   sub.textContent = message || "Is he here?";
 
   const grid = document.createElement("div");
   grid.className = "milo-game-grid";
 
-  // build three cards, one with Milo, two random animals
   const positions = [0, 1, 2];
   const miloPos = positions[Math.floor(Math.random() * positions.length)];
 
@@ -1056,7 +1019,10 @@ function init() {
 
   learningCloseBtn.addEventListener("click", closeLearningModal);
   learningModalEl.addEventListener("click", (e) => {
-    if (e.target === learningModalEl || e.target.classList.contains("learning-backdrop")) {
+    if (
+      e.target === learningModalEl ||
+      e.target.classList.contains("learning-backdrop")
+    ) {
       closeLearningModal();
     }
   });
