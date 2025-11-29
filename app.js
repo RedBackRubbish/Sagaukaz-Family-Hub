@@ -1,17 +1,72 @@
 // ------------- KIDS CONFIG ------------------------------------
 
 const kids = [
+  // Parents
+  { id: "mum", name: "Mum", age: null, emoji: "👑", tagline: "Queen of the House" },
+  { id: "dad", name: "Dad", age: null, emoji: "🦍", tagline: "Gorilla in Charge" },
+
+  // Kids
   { id: "tali", name: "Tali", age: 13, emoji: "🌟", tagline: "Big Sis Guardian" },
   { id: "tai", name: "Tai", age: 10, emoji: "⚔️", tagline: "Quest Master" },
   { id: "moses", name: "Moses", age: 5, emoji: "🛡️", tagline: "Brave Helper" },
-
-  // Chaos kid + twin
   { id: "toby", name: "Toby", age: 3, emoji: "😈", tagline: "Chaos Kid" },
   { id: "ziah", name: "Ziah", age: 3, emoji: "🧸", tagline: "Tiny Adventurer" },
 ];
 
+
 // Per-kid quests
 const kidQuests = {
+  // Mum quests
+  mum: [
+    {
+      id: "mum-sandwich",
+      icon: "🥪",
+      title: "Sandwich Queen",
+      description: "Make Dad a sandwich (or choose a special snack for him).",
+      coins: 5,
+    },
+    {
+      id: "mum-reset",
+      icon: "🧺",
+      title: "Laundry Legend",
+      description: "Do one laundry mission: load, hang, or fold.",
+      coins: 4,
+    },
+    {
+      id: "mum-rest",
+      icon: "🫶",
+      title: "Queen’s Break",
+      description: "Take 10 minutes just for you – tea, scroll, or quiet.",
+      coins: 3,
+    },
+  ],
+
+  // Dad quests
+  dad: [
+    {
+      id: "dad-bins",
+      icon: "🗑️",
+      title: "Bin Gorilla",
+      description: "Take bins out / in or empty all house bins.",
+      coins: 4,
+    },
+    {
+      id: "dad-play",
+      icon: "🎮",
+      title: "Play Time Boss",
+      description: "Give at least 15 minutes of full-focus play with the kids.",
+      coins: 4,
+    },
+    {
+      id: "dad-dishes",
+      icon: "🍽️",
+      title: "Dishwasher Don",
+      description: "Do a full load: stack, run or empty the dishwasher.",
+      coins: 3,
+    },
+  ],
+
+  // Kids
   tali: [
     {
       id: "tali-room",
@@ -114,6 +169,7 @@ const kidQuests = {
     },
   ],
 };
+
 
 // Reward shop (same for all kids for now)
 const rewardShop = [
