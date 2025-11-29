@@ -8,7 +8,7 @@ const kids = [
   // Kids
   { id: "tali", name: "Tali", age: 13, emoji: "🌟", tagline: "Big Sis Guardian" },
   { id: "tai", name: "Tai", age: 10, emoji: "⚔️", tagline: "Quest Master" },
-  { id: "moses", name: "Moses", age: 5, emoji: "🛡️", tagline: "Brave Helper" },
+  { id: "moses", name: "Moses", age: 5, emoji: "🛡️", tagline: "Brave Buffalo" },
   { id: "toby", name: "Toby", age: 3, emoji: "😈", tagline: "Chaos Kid" },
   { id: "ziah", name: "Ziah", age: 3, emoji: "🧸", tagline: "Tiny Adventurer" },
 ];
