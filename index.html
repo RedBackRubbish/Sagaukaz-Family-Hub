@@ -4,20 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Family Hub</title>
-  <meta name="description" content="Family Hub – quests, coins, moods, rewards and reading time for the Sagaukaz crew." />
+  <meta name="description" content="Sagaukaz Family Hub – quests, coins, moods, rewards and Milo stories for the whole crew." />
+
   <link rel="stylesheet" href="styles.css" />
-  <!-- PWA / App Settings -->
-<link rel="manifest" href="manifest.json" />
-<meta name="theme-color" content="#000000" />
 
-<!-- iOS full screen mode -->
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="apple-mobile-web-app-title" content="Family Hub" />
+  <!-- PWA / App Settings (works with your manifest.json + heart icon) -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#000000" />
 
-<!-- iOS Home Screen icon -->
-<link rel="apple-touch-icon" href="icons/icon-heart.svg" />
+  <!-- iOS full screen mode -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Family Hub" />
 
+  <!-- iOS Home Screen icon (your red heart) -->
+  <link rel="apple-touch-icon" href="icons/icon-heart.svg" />
 </head>
 <body>
   <div class="app">
@@ -47,12 +48,10 @@
       </div>
     </section>
 
-    <!-- KID SELECTOR -->
+    <!-- PROFILE SELECTOR -->
     <section class="kid-selector">
       <h2 class="section-label">Who’s playing?</h2>
-      <div id="kidTabs" class="kid-tabs">
-        <!-- JS: kid buttons go here -->
-      </div>
+      <div id="kidTabs" class="kid-tabs"></div>
     </section>
 
     <!-- ACTIVE PROFILE SUMMARY -->
@@ -91,9 +90,7 @@
         <h2 class="section-title">Today’s Quests</h2>
         <span id="questsSummary" class="section-caption"></span>
       </div>
-      <div id="questsList" class="quests-list">
-        <!-- JS: quests go here -->
-      </div>
+      <div id="questsList" class="quests-list"></div>
     </main>
 
     <!-- REWARD SHOP -->
@@ -102,9 +99,7 @@
         <h2 class="section-title">Reward Shop</h2>
         <span id="rewardSummary" class="section-caption">Spend coins to unlock fun rewards.</span>
       </div>
-      <div id="rewardsList" class="rewards-list">
-        <!-- JS: rewards go here -->
-      </div>
+      <div id="rewardsList" class="rewards-list"></div>
     </section>
 
     <!-- READING & PLAY TIME -->
@@ -150,12 +145,8 @@
         <h3 id="learningTitle" class="learning-title"></h3>
         <button id="learningClose" class="learning-close" aria-label="Close">✕</button>
       </div>
-      <div id="learningBody" class="learning-body">
-        <!-- JS fills content -->
-      </div>
-      <div id="learningFooter" class="learning-footer">
-        <!-- JS fills buttons -->
-      </div>
+      <div id="learningBody" class="learning-body"></div>
+      <div id="learningFooter" class="learning-footer"></div>
     </div>
   </div>
 
