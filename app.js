@@ -1,4 +1,4 @@
-// ------------- KIDS CONFIG ------------------------------------
+// ------------- PROFILES CONFIG --------------------------------
 
 const kids = [
   // Parents
@@ -8,39 +8,37 @@ const kids = [
   // Kids
   { id: "tali", name: "Tali", age: 13, emoji: "🌟", tagline: "Big Sis Guardian" },
   { id: "tai", name: "Tai", age: 10, emoji: "⚔️", tagline: "Quest Master" },
-  { id: "moses", name: "Moses", age: 5, emoji: "🛡️", tagline: "Brave Buffalo" },
+  { id: "moses", name: "Moses", age: 5, emoji: "🛡️", tagline: "Brave Helper" },
   { id: "toby", name: "Toby", age: 3, emoji: "😈", tagline: "Chaos Kid" },
   { id: "ziah", name: "Ziah", age: 3, emoji: "🧸", tagline: "Tiny Adventurer" },
 ];
 
-
-// Per-kid quests
+// Per-profile quests
 const kidQuests = {
   // Mum quests
-  // Mum quests
-mum: [
-  {
-    id: "mum-sandwich",
-    icon: "🥪",
-    title: "Sandwich Queen",
-    description: "Make Dad a sandwich (or choose a special snack for him).",
-    coins: 5,
-  },
-  {
-    id: "mum-reset",
-    icon: "🧺",
-    title: "Laundry Legend",
-    description: "Do one laundry mission: load, dry, or fold.",
-    coins: 4,
-  },
-  {
-    id: "mum-break",
-    icon: "👑",
-    title: "Boss Meri's Break",
-    description: "2 hours of alone time: coffee, pokies, scroll, relax — no interruptions.",
-    coins: 8,
-  },
-],
+  mum: [
+    {
+      id: "mum-sandwich",
+      icon: "🥪",
+      title: "Sandwich Queen",
+      description: "Make Dad a sandwich (or choose a special snack for him).",
+      coins: 5,
+    },
+    {
+      id: "mum-reset",
+      icon: "🧺",
+      title: "Laundry Legend",
+      description: "Do one laundry mission: load, hang, or fold.",
+      coins: 4,
+    },
+    {
+      id: "mum-break",
+      icon: "👑",
+      title: "Queen’s Break",
+      description: "2 hours of alone time: coffee, pokies, scroll, relax — no interruptions.",
+      coins: 8,
+    },
+  ],
 
   // Dad quests
   dad: [
@@ -55,7 +53,7 @@ mum: [
       id: "dad-play",
       icon: "🎮",
       title: "Play Time Boss",
-      description: "Give at least 1hr of full-focus play with the kids.",
+      description: "Give at least 15 minutes of full-focus play with the kids.",
       coins: 4,
     },
     {
@@ -87,7 +85,7 @@ mum: [
       id: "tali-checkin",
       icon: "💬",
       title: "Talk Time",
-      description: "Have a quick check-in chat with Mum or Dad. Talk about your day",
+      description: "Have a quick check-in chat with Mum or Dad.",
       coins: 3,
     },
   ],
@@ -171,18 +169,18 @@ mum: [
   ],
 };
 
-
-// Reward shop (same for all kids for now)
+// Reward shop
 const rewardShop = [
   {
-  id: "mum-queen-week",
-  icon: "👑",
-  title: "Queen of the Week",
-  description: "Mum-only reward: 2-hour alone time pass (coffee, pokies, scroll) and crowned Queen of the Week.",
-  cost: 40,
-  onlyFor: "mum",
-},
- {
+    id: "mum-queen-week",
+    icon: "👑",
+    title: "Queen of the Week",
+    description:
+      "Mum-only reward: 2-hour alone time pass (coffee, pokies, scroll) and crowned Queen of the Week.",
+    cost: 40,
+    onlyFor: "mum",
+  },
+  {
     id: "dessert",
     icon: "🍨",
     title: "Choose Dessert",
@@ -220,14 +218,60 @@ const moodsMap = {
   proud: "Proud 🌟",
 };
 
+// ------------- LEARNING CONTENT (Milo, books, cards, game) -----
+
+const babyStories = [
+  {
+    id: "milo-day",
+    title: "Milo’s Big Day",
+    pages: [
+      {
+        emoji: "🐕",
+        text: "Milo the German Shepherd wakes up and stretches.",
+        sub: "Good morning, Milo!",
+      },
+      {
+        emoji: "🏡",
+        text: "He runs around the yard, guarding the Sagaukaz home.",
+        sub: "He checks the gate, the grass and the toys.",
+      },
+      {
+        emoji: "🦴",
+        text: "Milo finds his favourite bone and has a big chew.",
+        sub: "Chomp chomp chomp!",
+      },
+      {
+        emoji: "🛏️",
+        text: "After a huge day, Milo curls up and falls asleep.",
+        sub: "Good night, Milo. See you tomorrow.",
+      },
+    ],
+  },
+];
+
+const flashCards = [
+  { emoji: "🐕", label: "Milo the dog" },
+  { emoji: "😈", label: "Toby the Chaos Kid" },
+  { emoji: "🧸", label: "Ziah the Tiny Adventurer" },
+  { emoji: "🚚", label: "Dad’s rubbish truck" },
+  { emoji: "🏠", label: "Our home" },
+  { emoji: "❤️", label: "Our family" },
+];
+
+const miloGameDistractors = [
+  { emoji: "🐱", label: "Cat" },
+  { emoji: "🐄", label: "Cow" },
+  { emoji: "🐷", label: "Pig" },
+  { emoji: "🐰", label: "Bunny" },
+];
+
 // ------------- STATE / STORAGE --------------------------------
 
-// bump version to avoid clashing with older structure
 const STORAGE_KEY = "familyHubState_v2";
 
 let state = {
   activeKidId: "tali",
-  // kids: { kidId: { coins, completedQuestIds, mood, unlockedRewardIds } }
+  // profiles: kidId -> { coins, completedQuestIds, mood, unlockedRewardIds }
   kids: {},
 };
 
@@ -240,7 +284,6 @@ function initKidStateIfNeeded(kidId) {
       unlockedRewardIds: [],
     };
   } else {
-    // ensure new fields exist
     state.kids[kidId].completedQuestIds ||= [];
     state.kids[kidId].unlockedRewardIds ||= [];
   }
@@ -296,13 +339,21 @@ const familyLevelValueEl = document.getElementById("familyLevelValue");
 const familyLevelFillEl = document.getElementById("familyLevelFill");
 const familySummaryTextEl = document.getElementById("familySummaryText");
 
+// Learning modal elements
+const learnButtons = Array.from(document.querySelectorAll(".learn-btn"));
+const learningModalEl = document.getElementById("learningModal");
+const learningTitleEl = document.getElementById("learningTitle");
+const learningBodyEl = document.getElementById("learningBody");
+const learningFooterEl = document.getElementById("learningFooter");
+const learningCloseBtn = document.getElementById("learningClose");
+
 const toggleParentBtn = document.getElementById("toggleParentBtn");
 const parentPanel = document.getElementById("parentPanel");
 const resetKidQuestsBtn = document.getElementById("resetKidQuestsBtn");
 const resetKidAllBtn = document.getElementById("resetKidAllBtn");
 const resetAllKidsBtn = document.getElementById("resetAllKidsBtn");
 
-// ------------- HELPERS ----------------------------------------
+// ------------- LEVEL HELPERS ----------------------------------
 
 function getActiveKid() {
   return kids.find((k) => k.id === state.activeKidId) || kids[0];
@@ -313,17 +364,14 @@ function getKidState(kidId) {
   return state.kids[kidId];
 }
 
-// Level formula: 1 + floor(coins / 10), cap at 20
 function getKidLevel(coins) {
   return Math.min(20, 1 + Math.floor(coins / 10));
 }
 
-// Family level: 1 + floor(totalCoinsAll / 40), cap at 20
 function getFamilyLevel(totalCoins) {
   return Math.min(20, 1 + Math.floor(totalCoins / 40));
 }
 
-// Progress to next family level (0–1)
 function getFamilyLevelProgress(totalCoins) {
   const level = getFamilyLevel(totalCoins);
   const currentBase = (level - 1) * 40;
@@ -333,7 +381,7 @@ function getFamilyLevelProgress(totalCoins) {
   return within / span;
 }
 
-// ------------- RENDER -----------------------------------------
+// ------------- RENDER: PROFILE TABS ---------------------------
 
 function renderKidTabs() {
   kidTabsEl.innerHTML = "";
@@ -341,6 +389,7 @@ function renderKidTabs() {
     const btn = document.createElement("button");
     btn.className = "kid-tab";
     if (kid.id === "toby") btn.classList.add("toby"); // chaos style
+    if (kid.id === "mum") btn.classList.add("mum"); // queen style
     if (kid.id === state.activeKidId) {
       btn.classList.add("active");
     }
@@ -363,6 +412,8 @@ function renderKidTabs() {
     kidTabsEl.appendChild(btn);
   });
 }
+
+// ------------- RENDER: SUMMARY, MOOD, QUESTS ------------------
 
 function renderKidSummary() {
   const kid = getActiveKid();
@@ -404,7 +455,9 @@ function renderQuests() {
 
   questsListEl.innerHTML = "";
 
-  const completedCount = quests.filter((q) => kidData.completedQuestIds.includes(q.id)).length;
+  const completedCount = quests.filter((q) =>
+    kidData.completedQuestIds.includes(q.id)
+  ).length;
   questsSummaryEl.textContent = `${completedCount}/${quests.length} done`;
 
   quests.forEach((quest) => {
@@ -462,6 +515,8 @@ function renderQuests() {
   });
 }
 
+// ------------- RENDER: REWARDS & FAMILY LEVEL -----------------
+
 function renderRewards() {
   const kid = getActiveKid();
   const kidData = getKidState(kid.id);
@@ -473,14 +528,13 @@ function renderRewards() {
     return;
   }
 
-
-
-
   rewardSummaryEl.textContent = "Spend coins to unlock fun rewards.";
 
   rewardShop.forEach((reward) => {
     const isUnlocked = kidData.unlockedRewardIds.includes(reward.id);
     const canAfford = kidData.coins >= reward.cost;
+    const isMumOnly = reward.onlyFor === "mum";
+    const isBlockedByOwner = isMumOnly && kid.id !== "mum";
 
     const card = document.createElement("article");
     card.className = "reward-card";
@@ -518,6 +572,10 @@ function renderRewards() {
       btn.textContent = "Unlocked ✅";
       btn.classList.add("disabled");
       btn.disabled = true;
+    } else if (isBlockedByOwner) {
+      btn.textContent = "For Mum only";
+      btn.classList.add("disabled");
+      btn.disabled = true;
     } else if (!canAfford) {
       btn.textContent = "Need more coins";
       btn.classList.add("disabled");
@@ -538,7 +596,6 @@ function renderRewards() {
 }
 
 function renderFamilyLevel() {
-  // total coins for all kids
   let totalCoins = 0;
   kids.forEach((kid) => {
     const data = getKidState(kid.id);
@@ -550,11 +607,250 @@ function renderFamilyLevel() {
 
   familyLevelValueEl.textContent = level;
   familyLevelFillEl.style.width = `${Math.round(progress * 100)}%`;
-
   familySummaryTextEl.textContent = `Family coins: ${totalCoins} • Keep completing quests to reach Level ${
     level + 1
   }!`;
 }
+
+// ------------- LEARNING MODAL: STATE & RENDER -----------------
+
+const learningState = {
+  mode: null, // "book" | "cards" | "game"
+  storyIndex: 0,
+  storyPageIndex: 0,
+  cardIndex: 0,
+};
+
+function openLearningModal(mode) {
+  learningState.mode = mode;
+  if (mode === "book") {
+    learningState.storyIndex = 0;
+    learningState.storyPageIndex = 0;
+    renderStoryPage();
+  } else if (mode === "cards") {
+    learningState.cardIndex = 0;
+    renderFlashCard();
+  } else if (mode === "game") {
+    renderMiloGame();
+  }
+  learningModalEl.classList.add("open");
+  learningModalEl.setAttribute("aria-hidden", "false");
+}
+
+function closeLearningModal() {
+  learningModalEl.classList.remove("open");
+  learningModalEl.setAttribute("aria-hidden", "true");
+  learningBodyEl.innerHTML = "";
+  learningFooterEl.innerHTML = "";
+}
+
+// Storybook
+function renderStoryPage() {
+  const story = babyStories[learningState.storyIndex];
+  const page = story.pages[learningState.storyPageIndex];
+
+  learningTitleEl.textContent = story.title;
+
+  learningBodyEl.innerHTML = "";
+  learningFooterEl.innerHTML = "";
+
+  const card = document.createElement("div");
+  card.className = "learning-main-card";
+
+  const emoji = document.createElement("div");
+  emoji.className = "learning-emoji";
+  emoji.textContent = page.emoji;
+
+  const text = document.createElement("div");
+  text.className = "learning-text";
+  text.textContent = page.text;
+
+  const sub = document.createElement("div");
+  sub.className = "learning-subtext";
+  sub.textContent = page.sub || "";
+
+  const pageInfo = document.createElement("div");
+  pageInfo.className = "learning-subtext";
+  pageInfo.textContent = `Page ${learningState.storyPageIndex + 1} of ${
+    story.pages.length
+  }`;
+
+  card.appendChild(emoji);
+  card.appendChild(text);
+  card.appendChild(sub);
+  card.appendChild(pageInfo);
+
+  learningBodyEl.appendChild(card);
+
+  // footer buttons
+  const backBtn = document.createElement("button");
+  backBtn.className = "learning-btn";
+  backBtn.textContent = "Back";
+  backBtn.disabled = learningState.storyPageIndex === 0;
+  backBtn.addEventListener("click", () => {
+    if (learningState.storyPageIndex > 0) {
+      learningState.storyPageIndex--;
+      renderStoryPage();
+    }
+  });
+
+  const nextBtn = document.createElement("button");
+  nextBtn.className = "learning-btn primary";
+  const isLast = learningState.storyPageIndex === story.pages.length - 1;
+  nextBtn.textContent = isLast ? "Finish" : "Next";
+  nextBtn.addEventListener("click", () => {
+    if (!isLast) {
+      learningState.storyPageIndex++;
+      renderStoryPage();
+    } else {
+      closeLearningModal();
+    }
+  });
+
+  learningFooterEl.appendChild(backBtn);
+  learningFooterEl.appendChild(nextBtn);
+}
+
+// Flash cards
+function renderFlashCard() {
+  const cardData =
+    flashCards[learningState.cardIndex % flashCards.length];
+
+  learningTitleEl.textContent = "Family Flash Cards";
+
+  learningBodyEl.innerHTML = "";
+  learningFooterEl.innerHTML = "";
+
+  const card = document.createElement("div");
+  card.className = "learning-main-card";
+
+  const emoji = document.createElement("div");
+  emoji.className = "learning-emoji";
+  emoji.textContent = cardData.emoji;
+
+  const text = document.createElement("div");
+  text.className = "learning-text";
+  text.textContent = cardData.label;
+
+  const sub = document.createElement("div");
+  sub.className = "learning-subtext";
+  sub.textContent = "Tap next to see another card.";
+
+  card.appendChild(emoji);
+  card.appendChild(text);
+  card.appendChild(sub);
+
+  learningBodyEl.appendChild(card);
+
+  const prevBtn = document.createElement("button");
+  prevBtn.className = "learning-btn";
+  prevBtn.textContent = "Back";
+  prevBtn.addEventListener("click", () => {
+    learningState.cardIndex =
+      (learningState.cardIndex - 1 + flashCards.length) % flashCards.length;
+    renderFlashCard();
+  });
+
+  const nextBtn = document.createElement("button");
+  nextBtn.className = "learning-btn primary";
+  nextBtn.textContent = "Next";
+  nextBtn.addEventListener("click", () => {
+    learningState.cardIndex =
+      (learningState.cardIndex + 1) % flashCards.length;
+    renderFlashCard();
+  });
+
+  learningFooterEl.appendChild(prevBtn);
+  learningFooterEl.appendChild(nextBtn);
+}
+
+// Milo game
+function renderMiloGame(message) {
+  learningTitleEl.textContent = "Find Milo 🐕";
+
+  learningBodyEl.innerHTML = "";
+  learningFooterEl.innerHTML = "";
+
+  const wrapper = document.createElement("div");
+  wrapper.className = "learning-main-card";
+
+  const info = document.createElement("div");
+  info.className = "learning-text";
+  info.textContent = "Tap on the card where Milo is hiding.";
+
+  const sub = document.createElement("div");
+  sub.className = "learning-subtext";
+  sub.textContent = message || "Is he here?";
+
+  const grid = document.createElement("div");
+  grid.className = "milo-game-grid";
+
+  // build three cards, one with Milo, two random animals
+  const positions = [0, 1, 2];
+  const miloPos = positions[Math.floor(Math.random() * positions.length)];
+
+  positions.forEach((pos) => {
+    let emoji, label, isMilo;
+    if (pos === miloPos) {
+      emoji = "🐕";
+      label = "Milo";
+      isMilo = true;
+    } else {
+      const d =
+        miloGameDistractors[
+          Math.floor(Math.random() * miloGameDistractors.length)
+        ];
+      emoji = d.emoji;
+      label = d.label;
+      isMilo = false;
+    }
+
+    const card = document.createElement("div");
+    card.className = "milo-card";
+
+    const e = document.createElement("div");
+    e.className = "milo-card-emoji";
+    e.textContent = emoji;
+
+    const l = document.createElement("div");
+    l.className = "milo-card-label";
+    l.textContent = label;
+
+    card.appendChild(e);
+    card.appendChild(l);
+
+    card.addEventListener("click", () => {
+      if (isMilo) {
+        renderMiloGame("You found Milo! Great job!");
+      } else {
+        renderMiloGame("Not Milo this time. Try again!");
+      }
+    });
+
+    grid.appendChild(card);
+  });
+
+  wrapper.appendChild(info);
+  wrapper.appendChild(sub);
+  wrapper.appendChild(grid);
+
+  learningBodyEl.appendChild(wrapper);
+
+  const closeBtn = document.createElement("button");
+  closeBtn.className = "learning-btn";
+  closeBtn.textContent = "Close";
+  closeBtn.addEventListener("click", closeLearningModal);
+
+  const againBtn = document.createElement("button");
+  againBtn.className = "learning-btn primary";
+  againBtn.textContent = "Play Again";
+  againBtn.addEventListener("click", () => renderMiloGame());
+
+  learningFooterEl.appendChild(closeBtn);
+  learningFooterEl.appendChild(againBtn);
+}
+
+// ------------- MASTER RENDER ----------------------------------
 
 function renderAll() {
   renderKidTabs();
@@ -565,7 +861,7 @@ function renderAll() {
   renderFamilyLevel();
 }
 
-// ------------- HANDLERS ---------------------------------------
+// ------------- EVENT HANDLERS ---------------------------------
 
 function handleCompleteQuest(kidId, quest) {
   const kidData = getKidState(kidId);
@@ -593,6 +889,7 @@ function handleUnlockReward(kidId, reward) {
   const kidData = getKidState(kidId);
   if (kidData.unlockedRewardIds.includes(reward.id)) return;
   if (kidData.coins < reward.cost) return;
+  if (reward.onlyFor && reward.onlyFor !== kidId) return;
 
   const confirmMsg = `Spend ${reward.cost} coins for "${reward.title}"?`;
   if (!confirm(confirmMsg)) return;
@@ -639,7 +936,7 @@ function resetCurrentKidAll() {
 }
 
 function resetAllKids() {
-  if (!confirm("Reset ALL kids (coins, quests, moods and rewards)?")) return;
+  if (!confirm("Reset ALL profiles (coins, quests, moods and rewards)?")) return;
   kids.forEach((k) => {
     state.kids[k.id] = {
       coins: 0,
@@ -669,6 +966,20 @@ function init() {
   resetKidQuestsBtn.addEventListener("click", resetCurrentKidQuests);
   resetKidAllBtn.addEventListener("click", resetCurrentKidAll);
   resetAllKidsBtn.addEventListener("click", resetAllKids);
+
+  learnButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const mode = btn.dataset.mode;
+      openLearningModal(mode);
+    });
+  });
+
+  learningCloseBtn.addEventListener("click", closeLearningModal);
+  learningModalEl.addEventListener("click", (e) => {
+    if (e.target === learningModalEl || e.target.classList.contains("learning-backdrop")) {
+      closeLearningModal();
+    }
+  });
 }
 
 document.addEventListener("DOMContentLoaded", init);
