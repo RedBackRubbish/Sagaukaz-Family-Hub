@@ -176,7 +176,7 @@ const rewardShop = [
     icon: "👑",
     title: "Queen of the Week",
     description:
-      "Mum-only reward: 2-hour alone time pass (coffee, pokies, scroll) and crowned Queen of the Week.",
+      "Mum-only reward: alone time pass (coffee, pokies, scroll) and crowned Queen of the Week.",
     cost: 40,
     onlyFor: "mum",
   },
