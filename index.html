@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Family Hub</title>
-  <meta name="description" content="Family Hub – quests, coins, moods and rewards for the whole Sagaukaz crew." />
+  <meta name="description" content="Family Hub – quests, coins, moods, rewards and reading time for the Sagaukaz crew." />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -14,7 +14,7 @@
     <header class="header">
       <div>
         <h1 class="app-title">Family Hub</h1>
-        <p class="app-subtitle">Quests, coins & moods for the whole crew.</p>
+        <p class="app-subtitle">Quests, coins, moods & stories for the whole crew.</p>
       </div>
       <div class="family-badge">
         🕸 Sagaukaz Squad
@@ -43,7 +43,7 @@
       </div>
     </section>
 
-    <!-- ACTIVE KID SUMMARY -->
+    <!-- ACTIVE PROFILE SUMMARY -->
     <section class="kid-summary">
       <div class="kid-summary-left">
         <div id="kidEmoji" class="kid-emoji">🌟</div>
@@ -95,19 +95,32 @@
       </div>
     </section>
 
+    <!-- READING & PLAY TIME -->
+    <section class="learning-section">
+      <div class="section-header">
+        <h2 class="section-title">Reading & Play Time</h2>
+        <span class="section-caption">Perfect for Toby, Ziah, Milo & everyone else.</span>
+      </div>
+      <div class="learning-buttons">
+        <button class="learn-btn" data-mode="book">📖 Baby Story</button>
+        <button class="learn-btn" data-mode="cards">🃏 Flash Cards</button>
+        <button class="learn-btn" data-mode="game">🐕 Find Milo Game</button>
+      </div>
+    </section>
+
     <!-- PARENT CONTROLS -->
     <section class="parent-section">
       <button id="toggleParentBtn" class="ghost-button">Parent Controls</button>
       <div id="parentPanel" class="parent-panel" hidden>
         <p class="parent-note">Grown-ups only 😊</p>
         <button id="resetKidQuestsBtn" class="parent-button">
-          Reset quests for current kid
+          Reset quests for current profile
         </button>
         <button id="resetKidAllBtn" class="parent-button">
-          Reset coins, quests & mood for current kid
+          Reset coins, quests & mood for current profile
         </button>
         <button id="resetAllKidsBtn" class="parent-button danger">
-          Reset ALL kids (coins, quests & moods)
+          Reset ALL profiles (coins, quests & moods)
         </button>
       </div>
     </section>
@@ -115,6 +128,23 @@
     <footer class="footer">
       Made with ❤️ by Dad
     </footer>
+  </div>
+
+  <!-- LEARNING MODAL (BOOK / CARDS / GAME) -->
+  <div id="learningModal" class="learning-modal" aria-hidden="true">
+    <div class="learning-backdrop"></div>
+    <div class="learning-dialog">
+      <div class="learning-header">
+        <h3 id="learningTitle" class="learning-title"></h3>
+        <button id="learningClose" class="learning-close" aria-label="Close">✕</button>
+      </div>
+      <div id="learningBody" class="learning-body">
+        <!-- JS fills content -->
+      </div>
+      <div id="learningFooter" class="learning-footer">
+        <!-- JS fills buttons -->
+      </div>
+    </div>
   </div>
 
   <script src="app.js"></script>
