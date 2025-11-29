@@ -4,11 +4,13 @@ const kids = [
   { id: "tali", name: "Tali", age: 13, emoji: "🌟", tagline: "Big Sis Guardian" },
   { id: "tai", name: "Tai", age: 10, emoji: "⚔️", tagline: "Quest Master" },
   { id: "moses", name: "Moses", age: 5, emoji: "🛡️", tagline: "Brave Helper" },
-  { id: "toby", name: "Toby", age: 3, emoji: "🧸", tagline: "Tiny Adventurer" },
-  { id: "ziah", name: "Ziah", age: 3, emoji: "🚀", tagline: "Mini Rocket" },
+
+  // Chaos kid + twin
+  { id: "toby", name: "Toby", age: 3, emoji: "😈", tagline: "Chaos Kid" },
+  { id: "ziah", name: "Ziah", age: 3, emoji: "🧸", tagline: "Tiny Adventurer" },
 ];
 
-// Per-kid quests (you can change these)
+// Per-kid quests
 const kidQuests = {
   tali: [
     {
@@ -113,6 +115,38 @@ const kidQuests = {
   ],
 };
 
+// Reward shop (same for all kids for now)
+const rewardShop = [
+  {
+    id: "dessert",
+    icon: "🍨",
+    title: "Choose Dessert",
+    description: "Pick the special dessert for tonight.",
+    cost: 10,
+  },
+  {
+    id: "movie",
+    icon: "🎬",
+    title: "Movie Boss",
+    description: "Choose the family movie night film.",
+    cost: 20,
+  },
+  {
+    id: "late-bed",
+    icon: "🌙",
+    title: "Late Bedtime",
+    description: "Stay up 20 minutes later than usual.",
+    cost: 25,
+  },
+  {
+    id: "activity",
+    icon: "🎢",
+    title: "Weekend Activity",
+    description: "Choose a fun weekend activity (within reason!).",
+    cost: 35,
+  },
+];
+
 const moodsMap = {
   happy: "Happy 😊",
   okay: "Okay 🙂",
@@ -123,11 +157,13 @@ const moodsMap = {
 
 // ------------- STATE / STORAGE --------------------------------
 
-const STORAGE_KEY = "familyHubState_v1";
+// bump version to avoid clashing with older structure
+const STORAGE_KEY = "familyHubState_v2";
 
 let state = {
   activeKidId: "tali",
-  kids: {}, // { kidId: { coins: number, completedQuestIds: [], mood: 'happy' | null } }
+  // kids: { kidId: { coins, completedQuestIds, mood, unlockedRewardIds } }
+  kids: {},
 };
 
 function initKidStateIfNeeded(kidId) {
@@ -136,7 +172,12 @@ function initKidStateIfNeeded(kidId) {
       coins: 0,
       completedQuestIds: [],
       mood: null,
+      unlockedRewardIds: [],
     };
+  } else {
+    // ensure new fields exist
+    state.kids[kidId].completedQuestIds ||= [];
+    state.kids[kidId].unlockedRewardIds ||= [];
   }
 }
 
@@ -144,7 +185,6 @@ function loadState() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) {
-      // first time, set defaults
       kids.forEach((k) => initKidStateIfNeeded(k.id));
       return;
     }
@@ -154,7 +194,6 @@ function loadState() {
         activeKidId: parsed.activeKidId || "tali",
         kids: parsed.kids || {},
       };
-      // ensure all kids exist
       kids.forEach((k) => initKidStateIfNeeded(k.id));
     }
   } catch (err) {
@@ -185,13 +224,20 @@ const moodButtons = Array.from(document.querySelectorAll(".mood-btn"));
 const questsListEl = document.getElementById("questsList");
 const questsSummaryEl = document.getElementById("questsSummary");
 
+const rewardsListEl = document.getElementById("rewardsList");
+const rewardSummaryEl = document.getElementById("rewardSummary");
+
+const familyLevelValueEl = document.getElementById("familyLevelValue");
+const familyLevelFillEl = document.getElementById("familyLevelFill");
+const familySummaryTextEl = document.getElementById("familySummaryText");
+
 const toggleParentBtn = document.getElementById("toggleParentBtn");
 const parentPanel = document.getElementById("parentPanel");
 const resetKidQuestsBtn = document.getElementById("resetKidQuestsBtn");
 const resetKidAllBtn = document.getElementById("resetKidAllBtn");
 const resetAllKidsBtn = document.getElementById("resetAllKidsBtn");
 
-// ------------- RENDER HELPERS ---------------------------------
+// ------------- HELPERS ----------------------------------------
 
 function getActiveKid() {
   return kids.find((k) => k.id === state.activeKidId) || kids[0];
@@ -202,11 +248,34 @@ function getKidState(kidId) {
   return state.kids[kidId];
 }
 
+// Level formula: 1 + floor(coins / 10), cap at 20
+function getKidLevel(coins) {
+  return Math.min(20, 1 + Math.floor(coins / 10));
+}
+
+// Family level: 1 + floor(totalCoinsAll / 40), cap at 20
+function getFamilyLevel(totalCoins) {
+  return Math.min(20, 1 + Math.floor(totalCoins / 40));
+}
+
+// Progress to next family level (0–1)
+function getFamilyLevelProgress(totalCoins) {
+  const level = getFamilyLevel(totalCoins);
+  const currentBase = (level - 1) * 40;
+  const nextBase = level * 40;
+  const span = nextBase - currentBase || 1;
+  const within = Math.min(Math.max(totalCoins - currentBase, 0), span);
+  return within / span;
+}
+
+// ------------- RENDER -----------------------------------------
+
 function renderKidTabs() {
   kidTabsEl.innerHTML = "";
   kids.forEach((kid) => {
     const btn = document.createElement("button");
     btn.className = "kid-tab";
+    if (kid.id === "toby") btn.classList.add("toby"); // chaos style
     if (kid.id === state.activeKidId) {
       btn.classList.add("active");
     }
@@ -234,9 +303,11 @@ function renderKidSummary() {
   const kid = getActiveKid();
   const kidData = getKidState(kid.id);
 
+  const level = getKidLevel(kidData.coins);
+
   kidEmojiEl.textContent = kid.emoji;
   kidNameEl.textContent = kid.name;
-  kidTaglineEl.textContent = kid.tagline;
+  kidTaglineEl.textContent = `Level ${level} • ${kid.tagline}`;
   kidCoinsEl.textContent = kidData.coins;
 }
 
@@ -326,11 +397,104 @@ function renderQuests() {
   });
 }
 
+function renderRewards() {
+  const kid = getActiveKid();
+  const kidData = getKidState(kid.id);
+
+  rewardsListEl.innerHTML = "";
+
+  if (!rewardShop.length) {
+    rewardSummaryEl.textContent = "No rewards set yet.";
+    return;
+  }
+
+  rewardSummaryEl.textContent = "Spend coins to unlock fun rewards.";
+
+  rewardShop.forEach((reward) => {
+    const isUnlocked = kidData.unlockedRewardIds.includes(reward.id);
+    const canAfford = kidData.coins >= reward.cost;
+
+    const card = document.createElement("article");
+    card.className = "reward-card";
+
+    const icon = document.createElement("div");
+    icon.className = "reward-icon";
+    icon.textContent = reward.icon;
+
+    const main = document.createElement("div");
+    main.className = "reward-main";
+
+    const title = document.createElement("div");
+    title.className = "reward-title";
+    title.textContent = reward.title;
+
+    const desc = document.createElement("div");
+    desc.className = "reward-desc";
+    desc.textContent = reward.description;
+
+    const meta = document.createElement("div");
+    meta.className = "reward-meta";
+    meta.textContent = `${reward.cost} coins`;
+
+    main.appendChild(title);
+    main.appendChild(desc);
+    main.appendChild(meta);
+
+    const actions = document.createElement("div");
+    actions.className = "reward-actions";
+
+    const btn = document.createElement("button");
+    btn.className = "reward-button";
+
+    if (isUnlocked) {
+      btn.textContent = "Unlocked ✅";
+      btn.classList.add("disabled");
+      btn.disabled = true;
+    } else if (!canAfford) {
+      btn.textContent = "Need more coins";
+      btn.classList.add("disabled");
+      btn.disabled = true;
+    } else {
+      btn.textContent = "Unlock";
+      btn.addEventListener("click", () => handleUnlockReward(kid.id, reward));
+    }
+
+    actions.appendChild(btn);
+
+    card.appendChild(icon);
+    card.appendChild(main);
+    card.appendChild(actions);
+
+    rewardsListEl.appendChild(card);
+  });
+}
+
+function renderFamilyLevel() {
+  // total coins for all kids
+  let totalCoins = 0;
+  kids.forEach((kid) => {
+    const data = getKidState(kid.id);
+    totalCoins += data.coins || 0;
+  });
+
+  const level = getFamilyLevel(totalCoins);
+  const progress = getFamilyLevelProgress(totalCoins);
+
+  familyLevelValueEl.textContent = level;
+  familyLevelFillEl.style.width = `${Math.round(progress * 100)}%`;
+
+  familySummaryTextEl.textContent = `Family coins: ${totalCoins} • Keep completing quests to reach Level ${
+    level + 1
+  }!`;
+}
+
 function renderAll() {
   renderKidTabs();
   renderKidSummary();
   renderMood();
   renderQuests();
+  renderRewards();
+  renderFamilyLevel();
 }
 
 // ------------- HANDLERS ---------------------------------------
@@ -345,6 +509,8 @@ function handleCompleteQuest(kidId, quest) {
   saveState();
   renderKidSummary();
   renderQuests();
+  renderRewards();
+  renderFamilyLevel();
 }
 
 function handleMoodClick(moodKey) {
@@ -353,6 +519,23 @@ function handleMoodClick(moodKey) {
   kidData.mood = moodKey;
   saveState();
   renderMood();
+}
+
+function handleUnlockReward(kidId, reward) {
+  const kidData = getKidState(kidId);
+  if (kidData.unlockedRewardIds.includes(reward.id)) return;
+  if (kidData.coins < reward.cost) return;
+
+  const confirmMsg = `Spend ${reward.cost} coins for "${reward.title}"?`;
+  if (!confirm(confirmMsg)) return;
+
+  kidData.coins -= reward.cost;
+  kidData.unlockedRewardIds.push(reward.id);
+
+  saveState();
+  renderKidSummary();
+  renderRewards();
+  renderFamilyLevel();
 }
 
 // Parent controls
@@ -381,18 +564,20 @@ function resetCurrentKidAll() {
     coins: 0,
     completedQuestIds: [],
     mood: null,
+    unlockedRewardIds: [],
   };
   saveState();
   renderAll();
 }
 
 function resetAllKids() {
-  if (!confirm("Reset ALL kids (coins, quests and moods)?")) return;
+  if (!confirm("Reset ALL kids (coins, quests, moods and rewards)?")) return;
   kids.forEach((k) => {
     state.kids[k.id] = {
       coins: 0,
       completedQuestIds: [],
       mood: null,
+      unlockedRewardIds: [],
     };
   });
   saveState();
