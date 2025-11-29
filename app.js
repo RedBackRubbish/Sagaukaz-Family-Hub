@@ -17,29 +17,30 @@ const kids = [
 // Per-kid quests
 const kidQuests = {
   // Mum quests
-  mum: [
-    {
-      id: "mum-sandwich",
-      icon: "🥪",
-      title: "Sandwich Queen",
-      description: "Make Dad a sandwich (or choose a special snack for him).",
-      coins: 5,
-    },
-    {
-      id: "mum-reset",
-      icon: "🧺",
-      title: "Laundry Legend",
-      description: "Do one laundry mission: load, hang, or fold.",
-      coins: 4,
-    },
-    {
-      id: "mum-rest",
-      icon: "🫶",
-      title: "Queen’s Break",
-      description: "Take 10 minutes just for you – tea, scroll, or quiet.",
-      coins: 3,
-    },
-  ],
+  // Mum quests
+mum: [
+  {
+    id: "mum-sandwich",
+    icon: "🥪",
+    title: "Sandwich Queen",
+    description: "Make Dad a sandwich (or choose a special snack for him).",
+    coins: 5,
+  },
+  {
+    id: "mum-reset",
+    icon: "🧺",
+    title: "Laundry Legend",
+    description: "Do one laundry mission: load, hang, or fold.",
+    coins: 4,
+  },
+  {
+    id: "mum-break",
+    icon: "👑",
+    title: "Queen’s Break",
+    description: "2 hours of alone time: coffee, pokies, scroll, relax — no interruptions.",
+    coins: 8,
+  },
+],
 
   // Dad quests
   dad: [
@@ -174,6 +175,14 @@ const kidQuests = {
 // Reward shop (same for all kids for now)
 const rewardShop = [
   {
+  id: "mum-queen-week",
+  icon: "👑",
+  title: "Queen of the Week",
+  description: "Mum-only reward: 2-hour alone time pass (coffee, pokies, scroll) and crowned Queen of the Week.",
+  cost: 40,
+  onlyFor: "mum",
+},
+ {
     id: "dessert",
     icon: "🍨",
     title: "Choose Dessert",
@@ -463,6 +472,9 @@ function renderRewards() {
     rewardSummaryEl.textContent = "No rewards set yet.";
     return;
   }
+
+
+
 
   rewardSummaryEl.textContent = "Spend coins to unlock fun rewards.";
 
