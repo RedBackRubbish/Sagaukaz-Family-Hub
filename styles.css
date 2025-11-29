@@ -42,7 +42,7 @@ body {
   border-radius: 18px;
   background: linear-gradient(135deg, #020617, #111827);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .app-title {
@@ -63,6 +63,59 @@ body {
   border-radius: 999px;
   background: rgba(148, 163, 184, 0.15);
   border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+/* FAMILY LEVEL ------------------------------------------------- */
+
+.family-level {
+  padding: 10px 14px 12px;
+  border-radius: 16px;
+  background: #020617;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  margin-bottom: 12px;
+}
+
+.family-level-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.family-level-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #9ca3af;
+}
+
+.family-level-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.family-level-bar {
+  position: relative;
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: #020617;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(30, 64, 175, 0.8);
+}
+
+.family-level-fill {
+  position: absolute;
+  inset: 0;
+  width: 0;
+  background: linear-gradient(90deg, #22c55e, #a3e635, #f97316);
+  transition: width 0.3s ease-out;
+}
+
+.family-summary-text {
+  margin-top: 6px;
+  font-size: 0.75rem;
+  color: #9ca3af;
 }
 
 /* KID SELECTOR ------------------------------------------------- */
@@ -98,6 +151,7 @@ body {
   gap: 6px;
   cursor: pointer;
   white-space: nowrap;
+  transition: background 0.15s ease-out, transform 0.06s ease-out, box-shadow 0.1s;
 }
 
 .kid-tab span {
@@ -108,6 +162,15 @@ body {
   background: radial-gradient(circle at top, #22c55e, #16a34a);
   color: #022c22;
   border-color: transparent;
+  box-shadow: 0 10px 22px rgba(34, 197, 94, 0.55);
+  transform: translateY(-1px);
+}
+
+/* Extra chaos glow for Toby 😈 */
+.kid-tab.toby.active {
+  background: radial-gradient(circle at top, #f97316, #b91c1c);
+  color: #fef2f2;
+  box-shadow: 0 10px 24px rgba(248, 113, 113, 0.7);
 }
 
 /* KID SUMMARY -------------------------------------------------- */
@@ -336,6 +399,79 @@ body {
   color: #9ca3af;
   opacity: 0.7;
   box-shadow: none;
+  cursor: default;
+}
+
+/* REWARD SHOP -------------------------------------------------- */
+
+.rewards-section {
+  margin-top: 18px;
+}
+
+.rewards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.reward-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: #020617;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.reward-icon {
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reward-main {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.reward-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.reward-desc {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.reward-meta {
+  font-size: 0.75rem;
+  color: #facc15;
+}
+
+.reward-actions {
+  display: flex;
+  align-items: center;
+}
+
+.reward-button {
+  border: none;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: #facc15;
+  color: #1f2937;
+  white-space: nowrap;
+}
+
+.reward-button.disabled {
+  background: #111827;
+  color: #9ca3af;
   cursor: default;
 }
 
