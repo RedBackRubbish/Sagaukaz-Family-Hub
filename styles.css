@@ -643,6 +643,103 @@ body {
   font-size: 0.75rem;
 }
 
+/* STORYBOOK / CARTOON BOOK ------------------------------------ */
+
+.book-layout {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  background: radial-gradient(circle at top, #111827, #020617);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.5);
+}
+
+.book-page {
+  padding: 14px 10px;
+  background: rgba(15, 23, 42, 0.96);
+}
+
+.book-page + .book-page {
+  border-left: 1px solid rgba(31, 41, 55, 0.9);
+}
+
+.book-spine-shadow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom, rgba(15, 23, 42, 0), rgba(0, 0, 0, 0.5), rgba(15, 23, 42, 0));
+  pointer-events: none;
+}
+
+.book-emoji-main {
+  font-size: 2.8rem;
+  margin-bottom: 6px;
+}
+
+.book-title-line {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.book-text {
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+
+.book-subtext {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.book-page-label {
+  font-size: 0.7rem;
+  color: #6b7280;
+  margin-top: 6px;
+}
+
+.book-cast {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.book-cast-title {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9ca3af;
+}
+
+.book-cast-row {
+  font-size: 1.6rem;
+}
+
+.book-cast-names {
+  font-size: 0.7rem;
+  color: #9ca3af;
+}
+
+/* Make book stack nicely on small screens */
+@media (max-width: 420px) {
+  .book-layout {
+    grid-template-columns: 1fr;
+  }
+  .book-page + .book-page {
+    border-left: none;
+    border-top: 1px solid rgba(31, 41, 55, 0.9);
+  }
+}
+
+
 /* PARENT CONTROLS --------------------------------------------- */
 
 .parent-section {
