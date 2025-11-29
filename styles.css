@@ -173,7 +173,15 @@ body {
   box-shadow: 0 10px 24px rgba(248, 113, 113, 0.7);
 }
 
-/* KID SUMMARY -------------------------------------------------- */
+/* Royal glow for Mum 👑 */
+.kid-tab.mum.active {
+  background: radial-gradient(circle at top, #f9a8d4, #c4b5fd);
+  color: #0f172a;
+  border-color: transparent;
+  box-shadow: 0 10px 24px rgba(244, 114, 182, 0.7);
+}
+
+/* PROFILE SUMMARY --------------------------------------------- */
 
 .kid-summary {
   margin-top: 8px;
@@ -473,6 +481,166 @@ body {
   background: #111827;
   color: #9ca3af;
   cursor: default;
+}
+
+/* READING & PLAY TIME ------------------------------------------ */
+
+.learning-section {
+  margin-top: 20px;
+}
+
+.learning-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.learn-btn {
+  flex: 1;
+  min-width: 30%;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: #020617;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  color: #e5e7eb;
+}
+
+/* LEARNING MODAL ----------------------------------------------- */
+
+.learning-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.learning-modal.open {
+  display: flex;
+}
+
+.learning-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.85);
+}
+
+.learning-dialog {
+  position: relative;
+  width: min(480px, 100% - 32px);
+  border-radius: 18px;
+  background: #020617;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  padding: 14px 14px 12px;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.7);
+  z-index: 1;
+}
+
+.learning-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.learning-title {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.learning-close {
+  border: none;
+  border-radius: 999px;
+  width: 28px;
+  height: 28px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  background: #0f172a;
+  color: #e5e7eb;
+}
+
+.learning-body {
+  min-height: 120px;
+  padding: 10px 4px;
+}
+
+.learning-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.learning-main-card {
+  border-radius: 16px;
+  background: #020617;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  padding: 18px 14px;
+  text-align: center;
+}
+
+.learning-emoji {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+}
+
+.learning-text {
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.learning-subtext {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.learning-btn {
+  flex: 1;
+  border-radius: 999px;
+  border: none;
+  padding: 8px 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: #1f2937;
+  color: #e5e7eb;
+}
+
+.learning-btn.primary {
+  background: #22c55e;
+  color: #022c22;
+}
+
+.milo-game-grid {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.milo-card {
+  flex: 1;
+  min-width: 70px;
+  border-radius: 16px;
+  padding: 14px 6px;
+  background: #020617;
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  text-align: center;
+  cursor: pointer;
+}
+
+.milo-card-emoji {
+  font-size: 2rem;
+  margin-bottom: 4px;
+}
+
+.milo-card-label {
+  font-size: 0.75rem;
 }
 
 /* PARENT CONTROLS --------------------------------------------- */
