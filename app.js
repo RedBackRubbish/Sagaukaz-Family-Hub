@@ -232,8 +232,13 @@ const babyStories = [
       },
       {
         emoji: "🏡",
-        text: "He runs around the yard, guarding the Sagaukaz home.",
-        sub: "He checks the gate, the grass and the toys.",
+        text: "He runs around the Sagaukaz yard, guarding the house.",
+        sub: "He checks the gate, the grass and all the toys.",
+      },
+      {
+        emoji: "👦🏾👦🏽👦🏾👦🏽👧🏾",
+        text: "The kids come outside to play with Milo.",
+        sub: "They are all little brown superheroes in this house.",
       },
       {
         emoji: "🦴",
@@ -242,12 +247,13 @@ const babyStories = [
       },
       {
         emoji: "🛏️",
-        text: "After a huge day, Milo curls up and falls asleep.",
-        sub: "Good night, Milo. See you tomorrow.",
+        text: "After a huge day, Milo curls up with the kids and falls asleep.",
+        sub: "Good night, Milo. Good night, Sagaukaz squad.",
       },
     ],
   },
 ];
+
 
 const flashCards = [
   { emoji: "🐕", label: "Milo the dog" },
