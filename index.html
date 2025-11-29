@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Family Hub</title>
+  <meta name="description" content="Family Hub – quests, coins and moods for the whole crew." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+
+    <!-- HEADER -->
+    <header class="header">
+      <div>
+        <h1 class="app-title">Family Hub</h1>
+        <p class="app-subtitle">Quests, coins & moods for the whole crew.</p>
+      </div>
+      <div class="family-badge">
+        🕸 Sagaukaz Squad
+      </div>
+    </header>
+
+    <!-- KID SELECTOR -->
+    <section class="kid-selector">
+      <h2 class="section-label">Who’s playing?</h2>
+      <div id="kidTabs" class="kid-tabs">
+        <!-- JS: kid buttons go here -->
+      </div>
+    </section>
+
+    <!-- ACTIVE KID SUMMARY -->
+    <section class="kid-summary">
+      <div class="kid-summary-left">
+        <div id="kidEmoji" class="kid-emoji">🌟</div>
+        <div>
+          <div id="kidName" class="kid-name">Tali</div>
+          <div id="kidTagline" class="kid-tagline">Level 1 Helper</div>
+        </div>
+      </div>
+      <div class="kid-summary-right">
+        <div class="coins-label">Coins</div>
+        <div id="kidCoins" class="coins-value">0</div>
+      </div>
+    </section>
+
+    <!-- MOOD CHECK -->
+    <section class="mood-card">
+      <div class="mood-header">
+        <span class="mood-label">How are you feeling today?</span>
+        <span id="moodStatus" class="mood-status-text">No mood picked yet</span>
+      </div>
+      <div class="mood-buttons">
+        <button class="mood-btn" data-mood="happy">😊</button>
+        <button class="mood-btn" data-mood="okay">🙂</button>
+        <button class="mood-btn" data-mood="sad">😢</button>
+        <button class="mood-btn" data-mood="angry">😡</button>
+        <button class="mood-btn" data-mood="proud">🌟</button>
+      </div>
+    </section>
+
+    <!-- QUESTS -->
+    <main>
+      <div class="section-header">
+        <h2 class="section-title">Today’s Quests</h2>
+        <span id="questsSummary" class="section-caption"></span>
+      </div>
+      <div id="questsList" class="quests-list">
+        <!-- JS: quests go here -->
+      </div>
+    </main>
+
+    <!-- PARENT CONTROLS -->
+    <section class="parent-section">
+      <button id="toggleParentBtn" class="ghost-button">Parent Controls</button>
+      <div id="parentPanel" class="parent-panel" hidden>
+        <p class="parent-note">Grown-ups only 😊</p>
+        <button id="resetKidQuestsBtn" class="parent-button">
+          Reset quests for current kid
+        </button>
+        <button id="resetKidAllBtn" class="parent-button">
+          Reset coins & quests for current kid
+        </button>
+        <button id="resetAllKidsBtn" class="parent-button danger">
+          Reset ALL kids (coins, quests & moods)
+        </button>
+      </div>
+    </section>
+
+    <footer class="footer">
+      Made with ❤️ by Dad
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
