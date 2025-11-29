@@ -660,33 +660,107 @@ function renderStoryPage() {
   learningBodyEl.innerHTML = "";
   learningFooterEl.innerHTML = "";
 
-  const card = document.createElement("div");
-  card.className = "learning-main-card";
+  // --- BOOK LAYOUT WRAPPER ---
+  const book = document.createElement("div");
+  book.className = "book-layout";
+
+  const spine = document.createElement("div");
+  spine.className = "book-spine-shadow";
+  book.appendChild(spine);
+
+  // LEFT PAGE: main emoji + text
+  const leftPage = document.createElement("div");
+  leftPage.className = "book-page";
 
   const emoji = document.createElement("div");
-  emoji.className = "learning-emoji";
+  emoji.className = "book-emoji-main";
   emoji.textContent = page.emoji;
 
   const text = document.createElement("div");
-  text.className = "learning-text";
+  text.className = "book-text";
   text.textContent = page.text;
 
   const sub = document.createElement("div");
-  sub.className = "learning-subtext";
+  sub.className = "book-subtext";
   sub.textContent = page.sub || "";
 
   const pageInfo = document.createElement("div");
-  pageInfo.className = "learning-subtext";
+  pageInfo.className = "book-page-label";
   pageInfo.textContent = `Page ${learningState.storyPageIndex + 1} of ${
     story.pages.length
   }`;
 
-  card.appendChild(emoji);
-  card.appendChild(text);
-  card.appendChild(sub);
-  card.appendChild(pageInfo);
+  leftPage.appendChild(emoji);
+  leftPage.appendChild(text);
+  leftPage.appendChild(sub);
+  leftPage.appendChild(pageInfo);
 
-  learningBodyEl.appendChild(card);
+  // RIGHT PAGE: cast of kids (little brown cartoon crew)
+  const rightPage = document.createElement("div");
+  rightPage.className = "book-page";
+
+  const cast = document.createElement("div");
+  cast.className = "book-cast";
+
+  const castTitle = document.createElement("div");
+  castTitle.className = "book-cast-title";
+  castTitle.textContent = "Starring";
+
+  const castRow = document.createElement("div");
+  castRow.className = "book-cast-row";
+  // Tali, Tai, Moses, Toby, Ziah as little brown cartoon kids
+  castRow.textContent = "👧🏾👦🏾👦🏽👦🏾👦🏽";
+
+  const castNames = document.createElement("div");
+  castNames.className = "book-cast-names";
+  castNames.textContent = "Tali, Tai, Moses, Toby & Ziah";
+
+  cast.appendChild(castTitle);
+  cast.appendChild(castRow);
+  cast.appendChild(castNames);
+
+  const miloNote = document.createElement("div");
+  miloNote.className = "book-subtext";
+  miloNote.textContent = "And of course, Milo the German Shepherd 🐕";
+
+  rightPage.appendChild(cast);
+  rightPage.appendChild(miloNote);
+
+  // Put pages into book
+  book.appendChild(leftPage);
+  book.appendChild(rightPage);
+
+  learningBodyEl.appendChild(book);
+
+  // --- FOOTER BUTTONS ---
+  const backBtn = document.createElement("button");
+  backBtn.className = "learning-btn";
+  backBtn.textContent = "Back";
+  backBtn.disabled = learningState.storyPageIndex === 0;
+  backBtn.addEventListener("click", () => {
+    if (learningState.storyPageIndex > 0) {
+      learningState.storyPageIndex--;
+      renderStoryPage();
+    }
+  });
+
+  const nextBtn = document.createElement("button");
+  nextBtn.className = "learning-btn primary";
+  const isLast = learningState.storyPageIndex === story.pages.length - 1;
+  nextBtn.textContent = isLast ? "Finish" : "Next";
+  nextBtn.addEventListener("click", () => {
+    if (!isLast) {
+      learningState.storyPageIndex++;
+      renderStoryPage();
+    } else {
+      closeLearningModal();
+    }
+  });
+
+  learningFooterEl.appendChild(backBtn);
+  learningFooterEl.appendChild(nextBtn);
+}
+
 
   // footer buttons
   const backBtn = document.createElement("button");
